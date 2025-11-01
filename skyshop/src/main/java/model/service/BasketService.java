@@ -4,7 +4,7 @@ import model.basket.ProductBasket;
 import model.basket.UserBasket;
 import model.product.Product;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
-
+import model.exception.NoSuchProductException;
 import java.awt.*;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,12 +19,12 @@ public class BasketService {
         this.storageService = storageService;
     }
 
-    public void addProductToBasket(UUID id) {
-        Optional<Product> productOpt = storageService.getProductById(id);
+    public void addProductToBasket(UUID productId) {
+        Optional<Product> productOpt = storageService.getProductById(productId);
         if (!productOpt.isPresent()) {
-            throw new IllegalArgumentException("Товар с таким id не найден: " + id);
+            throw new NoSuchProductException("Товар с id " + productId + " не найден");
         }
-        productBasket.addProduct(id);
+        productBasket.addProduct(productId);
     }
 
     public UserBasket getUserBasket() {
