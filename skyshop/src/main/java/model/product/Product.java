@@ -61,4 +61,7 @@ public abstract class Product implements Searchable {
         return id;
     }
 
+    public Object getPrice() {
+        return null;
+    }
 }
